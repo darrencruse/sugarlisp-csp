@@ -1,0 +1,17 @@
+#use "csp"
+
+(var ch (chan))
+
+(go
+  (do
+    (console.log "in goroutine")
+    (var val)
+    (while (!== ((set val (<~ ch))) csp.CLOSED)
+      (console.log val))))
+
+(go
+  (do
+    (~> 1 ch)
+    (var t (<~ (timeout 1000)))
+    (~> 2 ch)
+    (ch.close)))

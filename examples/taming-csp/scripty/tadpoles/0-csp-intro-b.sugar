@@ -1,0 +1,21 @@
+#use "csp"
+
+var ch = chan();
+
+function* slurp() {
+  var val;
+  while((val = <~ ch) !== csp.CLOSED) {
+    console.log(val);
+  }
+}
+
+function* main() {
+  1 ~> ch;
+  var t = <~ timeout(1000);
+  2 ~> ch;
+  ch.close();
+}
+
+// go <func> appears in go examples a lot.
+go slurp;
+go main;

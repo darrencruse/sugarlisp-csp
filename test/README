@@ -1,0 +1,5 @@
+Don't forget tests need to be run with:
+
+  node --harmony
+
+to enable generators (on older versions of node).

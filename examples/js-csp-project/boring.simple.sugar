@@ -1,0 +1,13 @@
+// http://talks.golang.org/2012/concurrency.slide#25
+// Function returning channel
+#use "csp"
+
+var boring = require("./boring");
+
+go {
+  var b = boring("boring!");
+  for(var i = 0; i < 5; i++) {
+    console.log("You say: " + (<~ b));
+  }
+  console.log("You are boring; I'm leaving.");
+};

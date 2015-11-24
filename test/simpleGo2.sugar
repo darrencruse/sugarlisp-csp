@@ -1,0 +1,19 @@
+#use "csp"
+
+var ch = chan();
+
+go {
+  console.log("in goroutine");
+  var val = <~ ch;
+  while(val !== csp.CLOSED) { 
+    console.log(val);
+    val = <~ ch;
+  }
+}
+
+go {
+  1 ~> ch;
+  var t = <~ timeout(1000);
+  2 ~> ch;
+  ch.close();
+}

@@ -1,0 +1,28 @@
+// http://talks.golang.org/2013/advconc.slide#6
+#use "csp"
+
+function* player(name, table) {
+  var ball;
+
+  while(ball !== csp.CLOSED) {
+    var ball = <~ table;
+    if(ball !== csp.CLOSED) {
+      ball.hits += 1;
+      console.log(name + " " + ball.hits);
+      var t = <~ timeout(100);
+      ball ~> table;
+    }
+  }
+  console.log(name + ": table's gone");
+}
+
+go {
+  var table = chan();
+
+  go player("ping", table);
+  go player("pong", table);
+
+  {hits: 0} ~> table;
+  var t = <~ timeout(1000);
+  table.close();
+};

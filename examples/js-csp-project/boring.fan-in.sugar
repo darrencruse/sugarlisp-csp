@@ -1,0 +1,26 @@
+// http://talks.golang.org/2012/concurrency.slide#27
+// Multiplexing
+#use "csp"
+
+var boring = require("./boring");
+
+function fanIn(input1, input2) {
+  var ch = chan();
+  function* collect(input) {
+    for {
+      (<~ input) ~> ch;
+    }
+  }
+  go(collect(input1));
+  go(collect(input2));
+  return ch;
+}
+
+go {
+  var ch = fanIn(boring("Joe"), boring("Ann"));
+  for (var i = 0; i < 10; ++i) {
+    console.log(<~ ch);
+  }
+  console.log( "You are boring; I'm leaving.");
+  process.exit();
+};

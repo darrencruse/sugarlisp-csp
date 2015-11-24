@@ -1,0 +1,37 @@
+{
+  "name": "sugarlisp-csp",
+  "description": "channels and goroutines for sugarscript via ubolonton's js-csp library",
+  "keywords": [
+    "csp",
+    "js-csp",
+    "ubolonton",
+    "sugarlisp",
+    "sugarscript",
+    "javascript",
+    "lisp",
+    "go"
+  ],
+  "author": "Darren Cruse",
+  "version": "0.5.0",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://raw.github.com/darrencruse/sugarlisp-csp/master/LICENSE"
+    }
+  ],
+  "engines": {
+    "node": ">=0.11.6"
+  },
+  "dependencies": {
+    "js-csp": ">=0.4.1"
+  },
+  "directories": {
+    "lib": "./lib"
+  },
+  "homepage": "https://github.com/darrencruse/sugarlisp-csp",
+  "bugs": "https://github.com/darrencruse/sugarlisp-csp/issues",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/darrencruse/sugarlisp-csp.git"
+  }
+}

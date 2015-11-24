@@ -1,0 +1,9 @@
+These sugarlisp examples did work at one time but not anymore.
+
+They probably stopped working when I incorporated more paren-free syntax handling here in csp.
+
+For now I'm just going to say csp assumes use of SugarScript syntax (as opposed to SugarLisp).
+
+I'm sure this would be easy to change if there's a desire for lispy syntax support.
+
+If so please contact me at darren.cruse@gmail.com.

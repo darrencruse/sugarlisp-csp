@@ -1,0 +1,19 @@
+// http://talks.golang.org/2012/concurrency.slide#35
+// Timeout using select
+#use "csp"
+
+var boring = require("./boring");
+
+go {
+  var b = boring("boring!");
+
+  for {
+    var r = <-alts([b, timeout(800)]);
+    if (r.channel === b) {
+      console.log(r.value);
+    } else {
+      console.log("You're too slow");
+      break;
+    }
+  }
+};

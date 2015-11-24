@@ -1,0 +1,27 @@
+
+// We support both the go style <- channel operations as well as
+// "tadpole style" <~, ~> operations as seen in this gist from
+// James Long (https://gist.github.com/jlongster/57ad73756529a5dcc4de)
+// They are completely equivalent - which you use is a matter of taste.
+
+// channel take (used by both the go and tadpole styles)
+// note the reader translates <- (prefix) and <~ to lispy (chtake..)
+(export chtake (macro (channel)
+  (yield (csp.take ~channel))))
+
+// channel put (used by the go style only)
+// note the reader translates <- (infix) to lispy (chput..)
+(export chput (macro (channel value)
+  (yield (csp.put ~channel ~value))))
+
+// channel put (tadpole style)
+// note the argument order is reversed compared to the <- go style above
+(export "~>" (macro (value channel)
+  (yield (csp.put ~channel ~value))))
+
+// <-alts/<~alts multi channel selection.
+// note these are actual keywords i.e. you *cant* put a space like "<- alts("
+(export "<-alts" (macro (...rest)
+  (yield (csp.alts ~rest))))
+(export "<~alts" (macro (...rest)
+  (yield (csp.alts ~rest))))

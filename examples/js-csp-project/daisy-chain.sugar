@@ -1,0 +1,24 @@
+#use "csp"
+
+function* chain(left, right) {
+  (1 + (<~ right)) ~> left;
+}
+
+go {
+  var n = 100000;
+  var leftmost = chan();
+  var right = leftmost;
+  var left = leftmost;
+
+  // Start the goroutines
+  for (var i = 0; i < n; i++) {
+    right = chan();
+    go(chain(left, right));
+    left = right;
+  }
+
+  // Start the chain
+  go { 1 ~> right };
+
+  console.log(<~ leftmost);
+};

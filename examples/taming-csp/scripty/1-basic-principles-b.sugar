@@ -1,0 +1,27 @@
+#use "csp"
+
+var ch = chan();
+
+go {
+  var v;
+  while((v = <- ch) !== csp.CLOSED) {
+    console.log(v);
+    (<- timeout(300));
+    ch <- 2;
+  }
+};
+
+go {
+  var v;
+  ch <- 1;
+  while((v = <- ch) !== csp.CLOSED) {
+    console.log(v);
+    (<- timeout(200));
+    ch <- 3;
+  }
+};
+
+go {
+  (<- timeout(5000));
+  ch.close();
+};

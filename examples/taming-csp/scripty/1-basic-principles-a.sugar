@@ -1,0 +1,21 @@
+#use "csp"
+
+var ch = chan();
+
+go {
+  while(ch <- 1) { <- timeout(250); }
+};
+
+go {
+  while(ch <- 2) { <- timeout(300); }
+};
+
+go {
+  while(ch <- 3) { <- timeout(1000); }
+};
+
+go {
+  times(v, 10,
+    console.log(<- ch));
+  ch.close();
+};

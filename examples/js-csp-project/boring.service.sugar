@@ -1,0 +1,15 @@
+// http://talks.golang.org/2012/concurrency.slide#26
+// Channels as a handle on a service
+#use "csp"
+
+var boring = require("./boring");
+
+go {
+  var joe = boring("Joe");
+  var ann = boring("Ann");
+  for (var i = 0; i < 5; i++) {
+    console.log(<~ joe);
+    console.log(<~ ann);
+  }
+  console.log("You are boring; I'm leaving.");
+};

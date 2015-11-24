@@ -1,0 +1,9 @@
+#use "csp"
+
+var x = (<- 3);
+
+var val, ch;
+val = (<- ch);
+
+
+

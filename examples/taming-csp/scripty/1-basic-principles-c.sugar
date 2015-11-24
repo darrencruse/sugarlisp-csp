@@ -1,0 +1,13 @@
+#use "csp"
+
+var ch = chan();
+
+go {
+  ch <- 5;
+  ch.close();
+};
+
+go {
+  <- timeout(1000);
+  console.log(<- ch);
+};

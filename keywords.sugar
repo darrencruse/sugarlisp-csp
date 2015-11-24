@@ -1,0 +1,22 @@
+#use "match"
+
+// go routine
+export "go" function {
+
+  case ["go" fname::slsymbol]
+    """csp.go(${fname});"""
+
+  case ["go" goargs::sllist]
+    match(goargs) {
+      case ["do" ...body]
+        """csp.go(function* () {
+         ..  ${@transpileExpressions(body)}
+         ..})"""
+      case [fncall::slsymbol ...fnargs]
+        """csp.go(${fncall},[${fnargs.join(',')}]);"""
+
+      default @error('go expects a body wrapped in {} or a generator function call');
+    }
+
+    default @error('go expects a body wrapped in {} or a named generator function');
+}

@@ -1,0 +1,52 @@
+#use "csp"
+
+go {
+  // non-blocking on unbuffered channels always fall through to the defaults
+  // add some buffer size to see a message get through
+// CONFIRM - IS THIS *DEFINITELY* THE SAME BEHAVIOR AS GO?
+  var messages = chan();
+  var signals = chan();
+
+  // Here's a non-blocking receive. If a value is
+  // available on `messages` then `select` will take
+  // the `<-messages` `case` with that value. If not
+  // it will immediately take the `default` case.
+  var selected = <-alts([messages], {default: true});
+  switch(selected.channel) {
+    case messages:
+      console.log("received message", selected.value);
+      break;
+    default:
+      console.log("no message received");
+      break;
+  }
+
+  // A non-blocking send works similarly.
+  var msg = "hi";
+  selected = <-alts([[messages, msg]], {default: true});
+  switch(selected.channel) {
+    case messages:
+      console.log("sent message", msg);
+      break;
+    default:
+      console.log("no message sent");
+      break;
+  }
+
+  // We can use multiple `case`s above the `default`
+  // clause to implement a multi-way non-blocking
+  // select. Here we attempt non-blocking receives
+  // on both `messages` and `signals`.
+  selected = <-alts([messages, signals], {default: true});
+  switch(selected.channel) {
+    case messages:
+      console.log("received message", selected.value);
+      break;
+    case signals:
+      console.log("received signal", selected.value);
+      break;
+    default:
+      console.log("no activity");
+      break;
+  }
+}

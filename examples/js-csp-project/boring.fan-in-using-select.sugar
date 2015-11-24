@@ -1,0 +1,25 @@
+// http://talks.golang.org/2012/concurrency.slide#34
+// Fan-in using select
+#use "csp"
+
+var boring = require("./boring");
+
+function fanIn(input1, input2) {
+  var ch = chan();
+  go {
+    for {
+      var r = <~alts([input1, input2]);
+      r.value ~> ch;
+    }
+  };
+  return ch;
+}
+
+go {
+  var ch = fanIn(boring("Joe"), boring("Ann"));
+  for (var i = 0; i < 10; ++i) {
+    console.log(<~ ch);
+  }
+  console.log( "You are boring; I'm leaving.");
+  process.exit();
+};

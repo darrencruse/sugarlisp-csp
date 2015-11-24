@@ -1,0 +1,12 @@
+#use "csp"
+
+module.exports = function boring(message) {
+  var ch = chan();
+  go {
+    for(var i = 0;true;i++) {
+      ch <- "message ${i}";
+      (<- timeout(Math.random() * 1000));
+    }
+  };
+  return ch;
+};
