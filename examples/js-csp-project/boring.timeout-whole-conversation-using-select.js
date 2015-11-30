@@ -17,13 +17,10 @@ csp.go(function*() {
     ]);
     if ((r.channel === b)) {
       console.log(r.value);
-
     } else {
       console.log("You talk too much.");
       break;
-
     };
-
   };
 
 });

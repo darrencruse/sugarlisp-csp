@@ -1,6 +1,4 @@
 var reader = require('sugarlisp-core/reader'),
-    corerfuncs = require('sugarlisp-core/readfuncs'),
-    ssrfuncs = require('sugarlisp-sugarscript/readfuncs'),
     sl = require('sugarlisp-core/types'),
     debug = require('debug')('sugarlisp:csp:syntax');
 
@@ -8,13 +6,18 @@ var reader = require('sugarlisp-core/reader'),
 // (can be used lispy style or paren free with {})
 exports['go'] = function(source, text) {
 
+  // the parsing that follows is only for sugarscript
+  if(this.extension === "slisp") {
+    return reader.retry_match;
+  }
+
   var goToken = source.next_token('go');
   var goAtom = sl.atom("go", {token: goToken});
   var list = sl.list(goAtom);
 
   // is it function call style e.g. go(chain(left,right)) ?
   if(source.on('(')) {
-    list.push(ssrfuncs.read_wrapped_delimited_list(source, '(', ')'));
+    list.push(reader.read_wrapped_delimited_list(source, '(', ')'));
   }
   else {
     // this handles e.g. go {..}, go funcname, etc.
@@ -24,6 +27,7 @@ exports['go'] = function(source, text) {
   list.__parenoptional = true;
   return list;
 };
+
 
 // channel put/take
 
@@ -53,11 +57,11 @@ exports['for'] = function(source) {
     //   dialect which they should #use *before* they #use "csp"
     //   because we fall back to them.
     var forToken = source.next_token('for');
-    var list = sl.list(sl.atom("fors", {token: forToken}));
+    var list = sl.list(sl.atom("for", {token: forToken}));
     // push an empty condition - this generates a "for (;;)"
     list.pushFromArray(["","",""]);
     // push the body
-    list.push(corerfuncs.read_delimited_list(source, '{', '}', [sl.atom("do")]));
+    list.push(reader.read_delimited_list(source, '{', '}', [sl.atom("begin")]));
     return list;
   }
 
@@ -65,43 +69,3 @@ exports['for'] = function(source) {
   // let the next "for" syntax handler down take it:
   return reader.retry_match;
 };
-
-/*
-FOR REFERENCE ONLY WILL DELETE
-
-example switch in js:
-
-selected = <-alts([messages, signals], {default: true});
-switch(selected.channel) {
-  case messages:
-    console.log("received message", selected.value);
-    break;
-  case signals:
-    console.log("received signal", selected.value);
-    break;
-  default:
-    console.log("no activity");
-    break;
-}
-
-example select statement from go:
-
-select {
-case i1 = <-c1:
-	print("received ", i1, " from c1\n")
-case c2 <- i2:
-	print("sent ", i2, " to c2\n")
-case i3, ok := (<-c3):  // same as: i3, ok := <-c3
-	if ok {
-		print("received ", i3, " from c3\n")
-	} else {
-		print("c3 is closed\n")
-	}
-case a[f()] = <-c4:
-	// same as:
-	// case t := <-c4
-	//	a[f()] = t
-default:
-	print("no communication\n")
-}
-*/

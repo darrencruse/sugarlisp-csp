@@ -14,9 +14,7 @@ function* player(name, table) {
       console.log(((name + " ") + ball.hits));
       var t = yield csp.take(timeout(100));
       yield csp.put(table, ball);
-
     };
-
   };
   console.log((name + ": table's gone"));
 }
@@ -30,6 +28,6 @@ csp.go(function*() {
     hits: 0
   });
   var t = yield csp.take(timeout(1000));
-  table.close();
+  return table.close();
 
 });

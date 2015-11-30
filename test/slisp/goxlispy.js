@@ -4,23 +4,21 @@ var chan = csp.chan;
 var timeout = csp.timeout;
 var alts = csp.alts;
 
-(var ch = undefined) chan();
+var ch = chan();
 
 (csp.go(function*() {
   console.log("in goroutine");
-  (var val = undefined);
-  (
-    while (((val = (yield csp.take(ch))) !== csp.CLOSED)) {
-      console.log(val);
-
-    });
+  var val;
+  while (((val = (yield csp.take(ch))) !== csp.CLOSED)) {
+    console.log(val);
+  };
 
 }));
 
 (csp.go(function*() {
   yield csp.put(ch, 1);
-  (var t = undefined)(yield csp.take(timeout(1000)));
+  var t = (yield csp.take(timeout(1000)));
   yield csp.put(ch, 2);
-  ch.close();
+  return ch.close();
 
 }));

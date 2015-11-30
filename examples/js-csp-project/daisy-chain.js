@@ -5,7 +5,7 @@ var timeout = csp.timeout;
 var alts = csp.alts;
 
 function* chain(left, right) {
-  yield csp.put(left, ((1 + (yield csp.take(right)))));
+  return yield csp.put(left, ((1 + (yield csp.take(right)))));
 }
 
 csp.go(function*() {
@@ -18,10 +18,9 @@ csp.go(function*() {
     right = chan();
     csp.go(chain, [left, right]);
     left = right;
-
   };
   csp.go(function*() {
-    yield csp.put(right, 1);
+    return yield csp.put(right, 1);
 
   });
   console.log(yield csp.take(leftmost));

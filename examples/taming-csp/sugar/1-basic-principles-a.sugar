@@ -15,7 +15,7 @@ go {
 };
 
 go {
-  times(v, 10,
-    console.log(<- ch));
+  dotimes(v, 10) 
+    console.log(<- ch);
   ch.close();
 };

@@ -9,7 +9,6 @@ var ch = chan();
 csp.go(function*() {
   while (yield csp.put(ch, 1)) {
     yield csp.take(timeout(250));
-
   };
 
 });
@@ -17,7 +16,6 @@ csp.go(function*() {
 csp.go(function*() {
   while (yield csp.put(ch, 2)) {
     yield csp.take(timeout(300));
-
   };
 
 });
@@ -25,15 +23,14 @@ csp.go(function*() {
 csp.go(function*() {
   while (yield csp.put(ch, 3)) {
     yield csp.take(timeout(1000));
-
   };
 
 });
 
 csp.go(function*() {
   for (var v = 0; v < 10; v++) {
-    console.log(yield csp.take(ch))
+    console.log(yield csp.take(ch));
   };
-  ch.close();
+  return ch.close();
 
 });

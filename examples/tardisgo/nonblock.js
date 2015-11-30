@@ -19,7 +19,6 @@ csp.go(function*() {
     default:
       console.log("no message received");
       break;
-
   };
   var msg = "hi";
   selected = yield csp.alts([
@@ -37,7 +36,6 @@ csp.go(function*() {
     default:
       console.log("no message sent");
       break;
-
   };
   selected = yield csp.alts([
     messages,
@@ -55,7 +53,6 @@ csp.go(function*() {
     default:
       console.log("no activity");
       break;
-
   };
 
 });

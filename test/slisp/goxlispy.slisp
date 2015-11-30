@@ -3,14 +3,14 @@
 (var ch (chan))
 
 (go
-  (do
+  (begin
     (console.log "in goroutine")
     (var val)
     (while (!== ((set val (<~ ch))) csp.CLOSED)
       (console.log val))))
 
 (go
-  (do
+  (begin 
     (~> 1 ch)
     (var t (<~ (timeout 1000)))
     (~> 2 ch)

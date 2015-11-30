@@ -8,7 +8,7 @@ export "go" function {
 
   case ["go" goargs::sllist]
     match(goargs) {
-      case ["do" ...body]
+      case ["begin" ...body]
         """csp.go(function* () {
          ..  ${@transpileExpressions(body)}
          ..})"""

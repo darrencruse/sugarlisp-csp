@@ -1,8 +1,0 @@
-
-This SugarLisp example no longer works as we have assumed SugarScript paren free syntax when using csp.
-
-In particular the example *can* be made to work as can be seen in the (working) "scriptyvars" version.
-
-To make it work parens were omitted from the while and var statements.
-
-This is obviously a hack - some validation or conditional logic should be added to better control things.

@@ -12,7 +12,6 @@ csp.go(function*() {
     console.log(v);
     (yield csp.take(timeout(300)));
     yield csp.put(ch, 2);
-
   };
 
 });
@@ -24,13 +23,12 @@ csp.go(function*() {
     console.log(v);
     (yield csp.take(timeout(200)));
     yield csp.put(ch, 3);
-
   };
 
 });
 
 csp.go(function*() {
   (yield csp.take(timeout(5000)));
-  ch.close();
+  return ch.close();
 
 });

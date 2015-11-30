@@ -23,12 +23,11 @@ function* firstSearchResult(query, replicas) {
 
   function* searchReplica(i) {
     var replicaFn = replicas[i];
-    yield csp.put(ch, (yield * replicaFn(query)));
+    return yield csp.put(ch, (yield * replicaFn(query)));
   }
   for (var i = 0;
     (i < replicas.length); i++) {
     csp.go(searchReplica, [i]);
-
   };
   return (yield csp.take(ch));
 }
@@ -37,21 +36,21 @@ function* google(query) {
   var ch = chan();
 
   csp.go(function*() {
-    yield csp.put(ch, (yield * firstSearchResult(query, [
+    return yield csp.put(ch, (yield * firstSearchResult(query, [
       web1,
       web2
     ])));
 
   });
   csp.go(function*() {
-    yield csp.put(ch, (yield * firstSearchResult(query, [
+    return yield csp.put(ch, (yield * firstSearchResult(query, [
       image1,
       image2
     ])));
 
   });
   csp.go(function*() {
-    yield csp.put(ch, (yield * firstSearchResult(query, [
+    return yield csp.put(ch, (yield * firstSearchResult(query, [
       video1,
       video2
     ])));
@@ -69,13 +68,10 @@ function* google(query) {
     ]);
     if ((r.channel === ch)) {
       results.push(r.value);
-
     } else {
       console.log("timed out");
       break;
-
     };
-
   };
 
   return results;

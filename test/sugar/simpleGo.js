@@ -11,7 +11,6 @@ csp.go(function*() {
   var val = undefined;
   while (((val = yield csp.take(ch)) !== csp.CLOSED)) {
     console.log(val);
-
   };
 
 });
@@ -20,6 +19,6 @@ csp.go(function*() {
   yield csp.put(ch, 1);
   var t = yield csp.take(timeout(1000));
   yield csp.put(ch, 2);
-  ch.close();
+  return ch.close();
 
 });

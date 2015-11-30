@@ -11,7 +11,6 @@ csp.go(function*() {
   for (var i = 0;
     (i < 5); i++) {
     console.log(("You say: " + (yield csp.take(b))));
-
   };
   console.log("You are boring; I'm leaving.");
 

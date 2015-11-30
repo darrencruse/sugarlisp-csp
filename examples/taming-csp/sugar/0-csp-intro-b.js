@@ -10,7 +10,6 @@ function* slurp() {
   var val = undefined;
   while (((val = yield csp.take(ch)) !== csp.CLOSED)) {
     console.log(val);
-
   };
 }
 
@@ -18,7 +17,7 @@ function* main() {
   yield csp.put(ch, 1);
   var t = yield csp.take(timeout(1000));
   yield csp.put(ch, 2);
-  ch.close();
+  return ch.close();
 }
 csp.go(slurp);
 csp.go(main);

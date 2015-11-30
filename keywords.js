@@ -28,7 +28,7 @@ exports["go"] = function() {
           return match(goargs, function(when) {
             when([
                 function(sym) {
-                  return sym.value === "do";
+                  return sym.value === "begin";
                 }
               ],
               function(vars) {

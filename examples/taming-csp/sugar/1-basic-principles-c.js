@@ -8,7 +8,7 @@ var ch = chan();
 
 csp.go(function*() {
   yield csp.put(ch, 5);
-  ch.close();
+  return ch.close();
 
 });
 

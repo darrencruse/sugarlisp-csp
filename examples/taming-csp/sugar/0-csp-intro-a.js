@@ -8,11 +8,9 @@ var ch = chan();
 
 csp.go(function*() {
   console.log("in goroutine");
-  var val = yield csp.take(ch);
-  while ((val !== csp.CLOSED)) {
+  var val = undefined;
+  while (((val = yield csp.take(ch)) !== csp.CLOSED)) {
     console.log(val);
-    val = yield csp.take(ch);
-
   };
 
 });
@@ -21,6 +19,6 @@ csp.go(function*() {
   yield csp.put(ch, 1);
   var t = yield csp.take(timeout(1000));
   yield csp.put(ch, 2);
-  ch.close();
+  return ch.close();
 
 });
