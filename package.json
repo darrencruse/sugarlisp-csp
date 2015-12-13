@@ -1,6 +1,6 @@
 {
   "name": "sugarlisp-csp",
-  "description": "channels and goroutines for sugarscript via ubolonton's js-csp library",
+  "description": "channels and goroutines for sugarlisp/sugarscript via ubolonton's js-csp library",
   "keywords": [
     "csp",
     "js-csp",
@@ -12,7 +12,7 @@
     "go"
   ],
   "author": "Darren Cruse",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "licenses": [
     {
       "type": "MIT",

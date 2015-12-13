@@ -1,5 +1,5 @@
 var reader = require('sugarlisp-core/reader'),
-    sl = require('sugarlisp-core/types'),
+    sl = require('sugarlisp-core/sl-types'),
     debug = require('debug')('sugarlisp:csp:syntax');
 
 // go routines
