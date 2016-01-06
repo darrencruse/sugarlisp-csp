@@ -1,6 +1,6 @@
 set -x
 diff -b macros.js macros.js.sav
-diff -b keywords.js keywords.js.sav
+diff -b gentab.js gentab.js.sav
 diff -b test/sugar/simpleGo.js test/sugar/simpleGo.js.sav
 diff -b test/sugar/simpleGo2.js test/sugar/simpleGo2.js.sav
 diff -b test/sugar/testCSP.js test/sugar/testCSP.js.sav

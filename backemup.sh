@@ -1,5 +1,5 @@
 cp macros.js macros.js.sav
-cp keywords.js keywords.js.sav
+cp gentab.js gentab.js.sav
 cp test/sugar/simpleGo.js test/sugar/simpleGo.js.sav
 cp test/sugar/simpleGo2.js test/sugar/simpleGo2.js.sav
 cp test/sugar/testCSP.js test/sugar/testCSP.js.sav

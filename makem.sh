@@ -1,5 +1,5 @@
 sugar macros.slisp macros.js
-sugar keywords.sugar keywords.js
+sugar gentab.sugar gentab.js
 sugar test/sugar/simpleGo.sugar test/sugar/simpleGo.js
 sugar test/sugar/simpleGo2.sugar test/sugar/simpleGo2.js
 sugar test/sugar/testCSP.sugar test/sugar/testCSP.js

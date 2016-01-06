@@ -1,5 +1,5 @@
 rm macros.js.sav
-rm keywords.js.sav
+rm gentab.js.sav
 rm test/sugar/simpleGo.js.sav
 rm test/sugar/simpleGo2.js.sav
 rm test/sugar/testCSP.js.sav
