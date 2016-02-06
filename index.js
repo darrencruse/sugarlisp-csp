@@ -2,8 +2,10 @@
 var utils = require('sugarlisp-core/utils');
 
 module.exports = {
+  name: "csp",
   onuse: "sugarlisp-csp/usejscsp.js",
-  syntax: require('./syntax'),
-  keywords: utils.merge(require('./keywords'),
-                       require('./macros.js'))
+  lextab: require('./lextab'),
+  readtab: require('./readtab'),
+  gentab: utils.merge(require('./gentab'),
+                      require('./macros.js'))
 };
